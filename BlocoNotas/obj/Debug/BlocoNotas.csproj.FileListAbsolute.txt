@@ -1,0 +1,11 @@
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\bin\Debug\BlocoNotas.exe.config
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\bin\Debug\BlocoNotas.exe
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\bin\Debug\BlocoNotas.pdb
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.Properties.Resources.resources
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.csproj.GenerateResource.cache
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.exe
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.pdb
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.frmCadastroNota.resources
+C:\Users\User\source\repos\BlocoNotas\BlocoNotas\obj\Debug\BlocoNotas.frmMain.resources
