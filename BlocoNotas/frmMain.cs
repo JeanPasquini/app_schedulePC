@@ -6,13 +6,15 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BlocoNotas
 {
     public partial class frmMain : Form
     {
+        public string alarm;
+        public string gridTitulo;
+
         public frmMain()
         {
             InitializeComponent();
@@ -20,9 +22,27 @@ namespace BlocoNotas
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            // Define o diretório "txts" a partir do diretório onde o aplicativo está localizado
-
             atualizarGrid();
+        }
+
+        private void alarmSet()
+        {
+            string inputTime = "17:24:00";
+
+            if (DateTime.TryParseExact(inputTime, "HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime targetTime))
+            {
+
+                while (DateTime.Now < targetTime)
+                {
+                    // Aguarde até que o horário especificado seja atingido
+                }
+
+                MessageBox.Show("Hora atingida! Mensagem emitida.");
+            }
+            else
+            {
+                MessageBox.Show("Formato de hora inválido. Use HH:mm:ss.");
+            }
         }
 
         private void atualizarGrid()
@@ -41,35 +61,59 @@ namespace BlocoNotas
 
         private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Verifica se a célula clicada não é o cabeçalho da coluna
             if (e.RowIndex >= 0)
             {
-                // Obtém o nome do arquivo e o conteúdo da célula selecionada
-                string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString(); // A primeira coluna (índice 0) contém o nome do arquivo
+                string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
                 string conteudoDoArquivo = LerConteudoDoArquivo(nomeDoArquivo);
+                getSpecificCode("config"+nomeDoArquivo);
 
-                // Carrega o título e o conteúdo nas TextBoxes
                 txtTitulo.Text = nomeDoArquivo;
                 txtConteudo.Text = conteudoDoArquivo;
+                txtAlarme.Text = alarm;
             }
         }
 
-        // Função para ler o conteúdo do arquivo com base no nome do arquivo
         private string LerConteudoDoArquivo(string nomeDoArquivo)
         {
-            // Construa o caminho completo do arquivo com base no diretório "txts"
-            string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
-            string caminhoDoArquivo = Path.Combine(diretorioDoApp, nomeDoArquivo);
-
-            // Verifique se o arquivo existe
-            if (File.Exists(caminhoDoArquivo))
+            if (File.Exists(caminhoArquivo(nomeDoArquivo)))
             {
-                // Leia o conteúdo do arquivo e retorne-o como uma string
-                return File.ReadAllText(caminhoDoArquivo);
+                return File.ReadAllText(caminhoArquivo(nomeDoArquivo));
             }
             else
             {
-                return string.Empty; // Arquivo não encontrado
+                return string.Empty;
+            }
+        }
+
+        private string caminhoArquivo(string nomeDoArquivo)
+        {
+            string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string caminhoDoArquivo = Path.Combine(diretorioDoApp, nomeDoArquivo);
+
+            if (File.Exists(caminhoDoArquivo))
+            {
+                return caminhoDoArquivo;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        private string caminhoArquivoConfig(string nomeDoArquivo)
+        {
+            string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string subpastaConfigs = "configs";
+            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
+            string caminhoDoArquivo = Path.Combine(caminhoDaSubpastaConfigs, nomeDoArquivo);
+
+            if (File.Exists(caminhoDoArquivo))
+            {
+                return caminhoDoArquivo;
+            }
+            else
+            {
+                return string.Empty;
             }
         }
 
@@ -78,6 +122,72 @@ namespace BlocoNotas
             frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text);
             frm.ShowDialog();
             atualizarGrid();
+        }
+
+        private void getSpecificCode(string nomeDoArquivo)
+        {
+            string keyword = "alarme";
+            string caminho = caminhoArquivoConfig(nomeDoArquivo);
+            try
+            {
+                string fileContent = File.ReadAllText(caminho);
+
+                int keywordIndex = fileContent.IndexOf(keyword);
+
+                if (keywordIndex != -1)
+                {
+                    string information = fileContent.Substring(keywordIndex + keyword.Length);
+
+                    alarm = information;
+                }
+                else
+                {
+                    Console.WriteLine("Palavra-chave não encontrada no arquivo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (File.Exists(caminhoArquivo(gridTitulo)) && File.Exists(caminhoArquivoConfig("config" + gridTitulo)))
+                {
+                    File.Delete(caminhoArquivo(gridTitulo));
+                    File.Delete(caminhoArquivoConfig("config" + gridTitulo));
+                    MessageBox.Show("Arquivo excluído com sucesso.");
+
+                    gridTitulo = null;
+                }
+                else
+                {
+                    MessageBox.Show("O arquivo não existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao excluir o arquivo: " + ex.Message);
+            }
+
+            atualizarGrid();
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Certifique-se de que o clique foi em uma célula válida (não no cabeçalho)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Obtém o valor da célula clicada na primeira coluna
+                DataGridViewCell cell = dataGridView2.Rows[e.RowIndex].Cells[0];
+                gridTitulo = cell.Value.ToString();
+
+                // Agora 'valorSelecionado' contém o valor da célula clicada na primeira coluna
+            }
         }
     }
 }

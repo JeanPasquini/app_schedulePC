@@ -28,12 +28,12 @@ namespace BlocoNotas
         private void salvar()
         {
             string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string subpastaConfigs = "configs"; // Nome da subpasta que você deseja acessar
+            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
             saveFileDialog.FileName = txtTitulo.Text;
-
-            // Define o diretório inicial como "txts" a partir do diretório onde o aplicativo está localizado
 
 
             saveFileDialog.InitialDirectory = diretorioDoApp;
@@ -48,6 +48,19 @@ namespace BlocoNotas
             File.WriteAllText(filePath, txtConteudo.Text);
 
             MessageBox.Show("Arquivo atualizado com sucesso.");
+
+            // Config
+
+            SaveFileDialog saveFileDialogConfig = new SaveFileDialog();
+            saveFileDialogConfig.Filter = "Arquivos de texto (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
+            saveFileDialogConfig.FileName = "config" + txtTitulo.Text;
+
+            string filePathConfig = Path.Combine(caminhoDaSubpastaConfigs, "config" + txtTitulo.Text + ".txt");
+
+            File.WriteAllText(filePathConfig, "alarme" + txtAlarme.Text);
+
+            MessageBox.Show("Arquivo config atualizado com sucesso.");
+            
         }
 
         private void btnCriarArquivotxt_Click(object sender, EventArgs e)

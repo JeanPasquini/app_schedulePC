@@ -35,6 +35,8 @@ namespace BlocoNotas
             this.label2 = new System.Windows.Forms.Label();
             this.btnCriarArquivotxt = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.txtAlarme = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtConteudo
@@ -72,7 +74,7 @@ namespace BlocoNotas
             // 
             // btnCriarArquivotxt
             // 
-            this.btnCriarArquivotxt.Location = new System.Drawing.Point(419, 411);
+            this.btnCriarArquivotxt.Location = new System.Drawing.Point(419, 467);
             this.btnCriarArquivotxt.Name = "btnCriarArquivotxt";
             this.btnCriarArquivotxt.Size = new System.Drawing.Size(75, 23);
             this.btnCriarArquivotxt.TabIndex = 4;
@@ -82,7 +84,7 @@ namespace BlocoNotas
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(338, 411);
+            this.btnCancelar.Location = new System.Drawing.Point(338, 467);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 5;
@@ -90,11 +92,29 @@ namespace BlocoNotas
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // txtAlarme
+            // 
+            this.txtAlarme.Location = new System.Drawing.Point(12, 428);
+            this.txtAlarme.Name = "txtAlarme";
+            this.txtAlarme.Size = new System.Drawing.Size(90, 20);
+            this.txtAlarme.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 412);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Alarme";
+            // 
             // frmCadastroNota
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(506, 446);
+            this.ClientSize = new System.Drawing.Size(506, 502);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtAlarme);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCriarArquivotxt);
             this.Controls.Add(this.label2);
@@ -102,7 +122,7 @@ namespace BlocoNotas
             this.Controls.Add(this.txtTitulo);
             this.Controls.Add(this.txtConteudo);
             this.Name = "frmCadastroNota";
-            this.Text = "Form1";
+            this.Text = "Edit Note";
             this.Load += new System.EventHandler(this.frmCadastroNota_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -117,6 +137,8 @@ namespace BlocoNotas
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCriarArquivotxt;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.TextBox txtAlarme;
+        private System.Windows.Forms.Label label3;
     }
 }
 
