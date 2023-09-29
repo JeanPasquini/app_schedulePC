@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BlocoNotas
@@ -14,6 +16,7 @@ namespace BlocoNotas
     {
         public string alarm;
         public string gridTitulo;
+        static AlarmManager globalAlarmManager = new AlarmManager();
 
         public frmMain()
         {
@@ -23,25 +26,31 @@ namespace BlocoNotas
         private void Form1_Load_1(object sender, EventArgs e)
         {
             atualizarGrid();
+            atualizaAlarm();
         }
 
-        private void alarmSet()
+        public void atualizaAlarm()
         {
-            string inputTime = "17:24:00";
+            globalAlarmManager.RemoveAllAlarms();
 
-            if (DateTime.TryParseExact(inputTime, "HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime targetTime))
+            string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string subpastaConfigs = "configs";
+            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
+            DirectoryInfo dirInfo = new DirectoryInfo(caminhoDaSubpastaConfigs);
+            FileInfo[] arquivos = dirInfo.GetFiles("*.txt");
+
+            foreach (FileInfo arquivo in arquivos)
             {
+                string formato = "HH:mm:ss";
 
-                while (DateTime.Now < targetTime)
+                if (DateTime.TryParseExact(getSpecificCodeString(arquivo.Name), formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime horaDaString))
                 {
-                    // Aguarde até que o horário especificado seja atingido
+                    DateTime horaAtual = DateTime.Now;
+                    if (horaDaString > horaAtual)
+                    {
+                        globalAlarmManager.AddAlarm(getSpecificCodeString(arquivo.Name));
+                    }
                 }
-
-                MessageBox.Show("Hora atingida! Mensagem emitida.");
-            }
-            else
-            {
-                MessageBox.Show("Formato de hora inválido. Use HH:mm:ss.");
             }
         }
 
@@ -55,7 +64,8 @@ namespace BlocoNotas
 
             foreach (FileInfo arquivo in arquivos)
             {
-                dataGridView2.Rows.Add(arquivo.Name, arquivo.CreationTime);
+                string arquivoFormatado = System.IO.Path.GetFileNameWithoutExtension(arquivo.Name);
+                dataGridView2.Rows.Add(arquivoFormatado, arquivo.CreationTime);
             }
         }
 
@@ -63,12 +73,11 @@ namespace BlocoNotas
         {
             if (e.RowIndex >= 0)
             {
-                string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string conteudoDoArquivo = LerConteudoDoArquivo(nomeDoArquivo);
+                string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString() + ".txt";
                 getSpecificCode("config"+nomeDoArquivo);
 
-                txtTitulo.Text = nomeDoArquivo;
-                txtConteudo.Text = conteudoDoArquivo;
+                txtTitulo.Text = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
                 txtAlarme.Text = alarm;
             }
         }
@@ -119,9 +128,37 @@ namespace BlocoNotas
 
         private void btnCriarArquivo_Click(object sender, EventArgs e)
         {
-            frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text);
+            frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtAlarme.Text);
             frm.ShowDialog();
             atualizarGrid();
+            atualizaAlarm();
+        }
+
+        private string getSpecificCodeString(string nomeDoArquivo)
+        {
+            string keyword = "alarme";
+            string caminho = caminhoArquivoConfig(nomeDoArquivo);
+            try
+            {
+                string fileContent = File.ReadAllText(caminho);
+
+                int keywordIndex = fileContent.IndexOf(keyword);
+
+                if (keywordIndex != -1)
+                {
+                    string information = fileContent.Substring(keywordIndex + keyword.Length);
+
+                    return alarm = information;
+                }
+                else
+                {
+                    return "nothing";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "erro";
+            }
         }
 
         private void getSpecificCode(string nomeDoArquivo)
@@ -156,10 +193,10 @@ namespace BlocoNotas
 
             try
             {
-                if (File.Exists(caminhoArquivo(gridTitulo)) && File.Exists(caminhoArquivoConfig("config" + gridTitulo)))
+                if (File.Exists(caminhoArquivo(gridTitulo + ".txt")) && File.Exists(caminhoArquivoConfig("config" + gridTitulo + ".txt")))
                 {
-                    File.Delete(caminhoArquivo(gridTitulo));
-                    File.Delete(caminhoArquivoConfig("config" + gridTitulo));
+                    File.Delete(caminhoArquivo(gridTitulo + ".txt"));
+                    File.Delete(caminhoArquivoConfig("config" + gridTitulo + ".txt"));
                     MessageBox.Show("Arquivo excluído com sucesso.");
 
                     gridTitulo = null;

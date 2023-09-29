@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="getAlarm.cs" />
     <Compile Include="frmCadastroNota.cs">
       <SubType>Form</SubType>
     </Compile>

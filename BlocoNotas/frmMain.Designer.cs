@@ -153,6 +153,7 @@ namespace BlocoNotas
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.btnCriarArquivo);
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SchedulePC";
             this.Load += new System.EventHandler(this.Form1_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

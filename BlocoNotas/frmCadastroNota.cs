@@ -16,10 +16,12 @@ namespace BlocoNotas
 
         public string titulo;
         public string conteudo;
-        public frmCadastroNota(string titulo, string conteudo)
+        public string alarme;
+        public frmCadastroNota(string titulo, string conteudo, string alarme)
         {
             this.titulo = titulo;
             this.conteudo = conteudo;
+            this.alarme = alarme;
             InitializeComponent();
 
             
@@ -57,10 +59,7 @@ namespace BlocoNotas
 
             string filePathConfig = Path.Combine(caminhoDaSubpastaConfigs, "config" + txtTitulo.Text + ".txt");
 
-            File.WriteAllText(filePathConfig, "alarme" + txtAlarme.Text);
-
-            MessageBox.Show("Arquivo config atualizado com sucesso.");
-            
+            File.WriteAllText(filePathConfig, "alarme" + txtAlarme.Text);  
         }
 
         private void btnCriarArquivotxt_Click(object sender, EventArgs e)
@@ -110,6 +109,7 @@ namespace BlocoNotas
         {
             txtConteudo.Text = conteudo;
             txtTitulo.Text = titulo;
+            txtAlarme.Text = alarme;
         }
     }
 }
