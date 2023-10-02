@@ -30,17 +30,18 @@ namespace BlocoNotas
         private void salvar()
         {
             string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
-            string subpastaConfigs = "configs"; // Nome da subpasta que você deseja acessar
-            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
+            
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
             saveFileDialog.FileName = txtTitulo.Text;
 
+            string subpastaTxts = "txt"; // Nome da subpasta que você deseja acessar
+            string caminhoDaSubpastaTxts = Path.Combine(diretorioDoApp, subpastaTxts);
 
             saveFileDialog.InitialDirectory = diretorioDoApp;
 
-            string filePath = saveFileDialog.FileName;
+            string filePath = Path.Combine(caminhoDaSubpastaTxts, txtTitulo.Text + ".txt");
 
             if (!filePath.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
             {
@@ -52,6 +53,9 @@ namespace BlocoNotas
             MessageBox.Show("Arquivo atualizado com sucesso.");
 
             // Config
+
+            string subpastaConfigs = "configs"; // Nome da subpasta que você deseja acessar
+            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
 
             SaveFileDialog saveFileDialogConfig = new SaveFileDialog();
             saveFileDialogConfig.Filter = "Arquivos de texto (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
@@ -65,11 +69,16 @@ namespace BlocoNotas
         private void btnCriarArquivotxt_Click(object sender, EventArgs e)
         {
             string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string subpastaTxt = "txt"; // Nome da subpasta que você deseja acessar
+            string subpastaConfig = "configs"; // Nome da subpasta que você deseja acessar
+            string caminhoDaSubpastaTxts = Path.Combine(diretorioDoApp, subpastaTxt);
+            string caminhoDaSubpastaConfig = Path.Combine(diretorioDoApp, subpastaConfig);
 
             //editar
             if (titulo != "" && conteudo != "")
             {
-                string caminhoDoArquivo = Path.Combine(diretorioDoApp, titulo);
+                string caminhoDoArquivo = Path.Combine(caminhoDaSubpastaTxts, titulo + ".txt");
+                string caminhoDoArquivoConfig = Path.Combine(caminhoDaSubpastaConfig, "config" + titulo + ".txt");
 
                 if (File.Exists(caminhoDoArquivo))
                 {
@@ -78,6 +87,7 @@ namespace BlocoNotas
                     if (result == DialogResult.Yes)
                     {
                         File.Delete(caminhoDoArquivo);
+                        File.Delete(caminhoDoArquivoConfig);
                         salvar();
                     }
                     else

@@ -20,3 +20,14 @@ C:\Users\User\Documents\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.cs
 C:\Users\User\Documents\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.exe
 C:\Users\User\Documents\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.pdb
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\bin\Debug\BlocoNotas.exe.config
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\bin\Debug\BlocoNotas.exe
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\bin\Debug\BlocoNotas.pdb
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.csproj.AssemblyReference.cache
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.frmCadastroNota.resources
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.frmMain.resources
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.Properties.Resources.resources
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.csproj.GenerateResource.cache
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.csproj.CoreCompileInputs.cache
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.exe
+C:\Users\pasqu\OneDrive\Documentos\GitHub\app_schedulePC\BlocoNotas\obj\Debug\BlocoNotas.pdb

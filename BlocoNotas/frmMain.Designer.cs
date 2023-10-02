@@ -41,6 +41,7 @@ namespace BlocoNotas
             this.txtAlarme = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnExcluir = new System.Windows.Forms.Button();
+            this.txtEditar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,20 +50,22 @@ namespace BlocoNotas
             this.btnCriarArquivo.Location = new System.Drawing.Point(282, 45);
             this.btnCriarArquivo.Name = "btnCriarArquivo";
             this.btnCriarArquivo.Size = new System.Drawing.Size(75, 23);
-            this.btnCriarArquivo.TabIndex = 0;
+            this.btnCriarArquivo.TabIndex = 1;
             this.btnCriarArquivo.Text = "Criar";
             this.btnCriarArquivo.UseVisualStyleBackColor = true;
             this.btnCriarArquivo.Click += new System.EventHandler(this.btnCriarArquivo_Click);
             // 
             // dataGridView2
             // 
+            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.dataGridView2.Location = new System.Drawing.Point(282, 71);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(205, 281);
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.Size = new System.Drawing.Size(237, 281);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
@@ -84,7 +87,7 @@ namespace BlocoNotas
             this.txtTitulo.Name = "txtTitulo";
             this.txtTitulo.ReadOnly = true;
             this.txtTitulo.Size = new System.Drawing.Size(264, 20);
-            this.txtTitulo.TabIndex = 2;
+            this.txtTitulo.TabIndex = 1;
             // 
             // txtConteudo
             // 
@@ -93,7 +96,7 @@ namespace BlocoNotas
             this.txtConteudo.Name = "txtConteudo";
             this.txtConteudo.ReadOnly = true;
             this.txtConteudo.Size = new System.Drawing.Size(264, 281);
-            this.txtConteudo.TabIndex = 3;
+            this.txtConteudo.TabIndex = 2;
             // 
             // label3
             // 
@@ -119,7 +122,7 @@ namespace BlocoNotas
             this.txtAlarme.Name = "txtAlarme";
             this.txtAlarme.ReadOnly = true;
             this.txtAlarme.Size = new System.Drawing.Size(100, 20);
-            this.txtAlarme.TabIndex = 6;
+            this.txtAlarme.TabIndex = 3;
             // 
             // label1
             // 
@@ -132,17 +135,28 @@ namespace BlocoNotas
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(363, 45);
+            this.btnExcluir.Location = new System.Drawing.Point(444, 45);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(75, 23);
-            this.btnExcluir.TabIndex = 8;
+            this.btnExcluir.TabIndex = 3;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
+            // txtEditar
+            // 
+            this.txtEditar.Location = new System.Drawing.Point(363, 45);
+            this.txtEditar.Name = "txtEditar";
+            this.txtEditar.Size = new System.Drawing.Size(75, 23);
+            this.txtEditar.TabIndex = 2;
+            this.txtEditar.Text = "Editar";
+            this.txtEditar.UseVisualStyleBackColor = true;
+            this.txtEditar.Click += new System.EventHandler(this.txtEditar_Click);
+            // 
             // frmMain
             // 
-            this.ClientSize = new System.Drawing.Size(499, 418);
+            this.ClientSize = new System.Drawing.Size(534, 418);
+            this.Controls.Add(this.txtEditar);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtAlarme);
@@ -175,6 +189,7 @@ namespace BlocoNotas
         private System.Windows.Forms.TextBox txtAlarme;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExcluir;
+        private System.Windows.Forms.Button txtEditar;
     }
 }
 

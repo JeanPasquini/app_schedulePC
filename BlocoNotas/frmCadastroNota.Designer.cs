@@ -45,7 +45,7 @@ namespace BlocoNotas
             this.txtConteudo.Multiline = true;
             this.txtConteudo.Name = "txtConteudo";
             this.txtConteudo.Size = new System.Drawing.Size(482, 306);
-            this.txtConteudo.TabIndex = 0;
+            this.txtConteudo.TabIndex = 2;
             // 
             // txtTitulo
             // 
@@ -107,7 +107,7 @@ namespace BlocoNotas
             this.txtAlarme.Mask = "00:00:00";
             this.txtAlarme.Name = "txtAlarme";
             this.txtAlarme.Size = new System.Drawing.Size(90, 20);
-            this.txtAlarme.TabIndex = 8;
+            this.txtAlarme.TabIndex = 3;
             this.txtAlarme.ValidatingType = typeof(System.DateTime);
             // 
             // frmCadastroNota
