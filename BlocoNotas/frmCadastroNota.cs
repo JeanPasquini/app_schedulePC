@@ -121,5 +121,20 @@ namespace BlocoNotas
             txtTitulo.Text = titulo;
             txtAlarme.Text = alarme;
         }
+
+        private void txtTitulo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Lista de caracteres inválidos em nomes de arquivo
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+
+            // Verifique se o caractere digitado está na lista de caracteres inválidos (exceto o caractere de backspace)
+            if (invalidChars.Contains(e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true; // Impede que o caractere seja inserido na TextBox
+
+                // Exibe um aviso
+                MessageBox.Show("Os seguintes caracteres são inválidos: <>:\"/\\|?*", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

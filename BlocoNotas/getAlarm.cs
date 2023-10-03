@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,11 +13,13 @@ namespace BlocoNotas
     {
         private string time;
         private Thread alarmThread;
-        private volatile bool stopAlarm = false; // Variável de sinalização
+        private volatile bool stopAlarm = false;
+        private string nomeArquivo;
 
-        public getAlarm(string time)
+        public getAlarm(string time, string nomeArquivo)
         {
             this.time = time;
+            this.nomeArquivo = nomeArquivo;
         }
 
         public void Start()
@@ -27,10 +30,10 @@ namespace BlocoNotas
 
         public void Remove()
         {
-            stopAlarm = true; // Sinalize para o thread que ele deve parar
+            stopAlarm = true;
             if (alarmThread != null && alarmThread.IsAlive)
             {
-                alarmThread.Join(); // Aguarde até que o thread seja encerrado
+                alarmThread.Join();
             }
         }
 
@@ -40,13 +43,16 @@ namespace BlocoNotas
             {
                 while (!stopAlarm && DateTime.Now < targetTime)
                 {
-                    // Aguarde até que o horário especificado seja atingido
                     Thread.Sleep(1000);
                 }
 
                 if (!stopAlarm)
                 {
-                    MessageBox.Show("Hora especificada atingida!");
+                    string conteudoDoArquivo = LerConteudoDoArquivo(nomeArquivo);
+                    string titulo = "Task: " + nomeArquivo;
+                    MessageBoxIcon icone = MessageBoxIcon.Information;
+
+                    MessageBox.Show(conteudoDoArquivo, titulo, MessageBoxButtons.OK, icone);
                 }
             }
             else
@@ -54,15 +60,46 @@ namespace BlocoNotas
                 MessageBox.Show("Formato de hora inválido. Use HH:mm:ss.");
             }
         }
+
+        private string LerConteudoDoArquivo(string nomeDoArquivo)
+        {
+            if (File.Exists(caminhoArquivoTxt(nomeDoArquivo)))
+            {
+                return File.ReadAllText(caminhoArquivoTxt(nomeDoArquivo));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        private string caminhoArquivoTxt(string nomeDoArquivo)
+        {
+            string diretorioDoApp = AppDomain.CurrentDomain.BaseDirectory;
+            string subpastaTxt = "txt";
+            string caminhoDaSubpastaTxt = Path.Combine(diretorioDoApp, subpastaTxt);
+            string caminhoDoArquivo = Path.Combine(caminhoDaSubpastaTxt, nomeDoArquivo);
+
+            if (File.Exists(caminhoDoArquivo))
+            {
+                return caminhoDoArquivo;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 
     public class AlarmManager
     {
         private List<getAlarm> activeAlarms = new List<getAlarm>();
+        private string nomeArquivo;
 
-        public void AddAlarm(string time)
+        public void AddAlarm(string time, string nomeArquivo)
         {
-            getAlarm alarm = new getAlarm(time);
+            this.nomeArquivo = nomeArquivo;
+            getAlarm alarm = new getAlarm(time, nomeArquivo);
             alarm.Start();
             activeAlarms.Add(alarm);
         }

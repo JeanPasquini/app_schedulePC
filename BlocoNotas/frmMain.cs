@@ -21,6 +21,8 @@ namespace BlocoNotas
         public frmMain()
         {
             InitializeComponent();
+            dataGridView2.Columns[0].Width = 120;
+            dataGridView2.Columns[1].Width = 74;
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -39,16 +41,18 @@ namespace BlocoNotas
             DirectoryInfo dirInfo = new DirectoryInfo(caminhoDaSubpastaConfigs);
             FileInfo[] arquivos = dirInfo.GetFiles("*.txt");
 
+
             foreach (FileInfo arquivo in arquivos)
             {
                 string formato = "HH:mm:ss";
+                string nomeArquivoSemConfig = arquivo.Name.Replace("config", "");
 
                 if (DateTime.TryParseExact(getSpecificCodeString(arquivo.Name), formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime horaDaString))
                 {
                     DateTime horaAtual = DateTime.Now;
                     if (horaDaString > horaAtual)
                     {
-                        globalAlarmManager.AddAlarm(getSpecificCodeString(arquivo.Name));
+                        globalAlarmManager.AddAlarm(getSpecificCodeString(arquivo.Name), nomeArquivoSemConfig);
                     }
                 }
             }
@@ -74,22 +78,6 @@ namespace BlocoNotas
             txtAlarme.Text = null;
             txtTitulo.Text = null;
             txtConteudo.Text = null;
-        }
-
-        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString() + ".txt";
-                string nome = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string nomeDoArquivoConfig = "config" + nomeDoArquivo;
-
-                getSpecificCode(nomeDoArquivoConfig);
-
-                txtTitulo.Text = nome;
-                txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
-                txtAlarme.Text = alarm;
-            }
         }
 
         private string LerConteudoDoArquivo(string nomeDoArquivo)
@@ -206,7 +194,7 @@ namespace BlocoNotas
             {
                 if (File.Exists(caminhoArquivoTxt(gridTitulo + ".txt")) && File.Exists(caminhoArquivoConfig("config" + gridTitulo + ".txt")))
                 {
-                    DialogResult resultado = MessageBox.Show("Tem certeza de que deseja excluir o arquivo?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult resultado = MessageBox.Show("Tem certeza de que deseja excluir o arquivo: "+ gridTitulo +"?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (resultado == DialogResult.Yes)
                     {
@@ -235,14 +223,26 @@ namespace BlocoNotas
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Certifique-se de que o clique foi em uma célula válida (não no cabeçalho)
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Obtém o valor da célula clicada na primeira coluna
                 DataGridViewCell cell = dataGridView2.Rows[e.RowIndex].Cells[0];
-                gridTitulo = cell.Value.ToString();
+                if (cell.Value != null && cell.Value != DBNull.Value)
+                {
+                    gridTitulo = cell.Value.ToString();
+                    string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString() + ".txt";
+                    string nome = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    string nomeDoArquivoConfig = "config" + nomeDoArquivo;
 
-                // Agora 'valorSelecionado' contém o valor da célula clicada na primeira coluna
+                    getSpecificCode(nomeDoArquivoConfig);
+
+                    txtTitulo.Text = nome;
+                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
+                    txtAlarme.Text = alarm;
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um arquivo existente");
+                }
             }
         }
 
