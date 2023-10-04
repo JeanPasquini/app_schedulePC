@@ -23,8 +23,6 @@ namespace BlocoNotas
             this.conteudo = conteudo;
             this.alarme = alarme;
             InitializeComponent();
-
-            
         }
 
         private void salvar()

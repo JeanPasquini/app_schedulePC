@@ -39,7 +39,7 @@ namespace BlocoNotas
 
         private void StartAlarm()
         {
-            if (DateTime.TryParseExact(time, "HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime targetTime))
+            if (DateTime.TryParseExact(time, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime targetTime))
             {
                 while (!stopAlarm && DateTime.Now < targetTime)
                 {
@@ -49,7 +49,7 @@ namespace BlocoNotas
                 if (!stopAlarm)
                 {
                     string conteudoDoArquivo = LerConteudoDoArquivo(nomeArquivo);
-                    string titulo = "Task: " + nomeArquivo;
+                    string titulo = "Task: " + Path.GetFileNameWithoutExtension(nomeArquivo);
                     MessageBoxIcon icone = MessageBoxIcon.Information;
 
                     MessageBox.Show(conteudoDoArquivo, titulo, MessageBoxButtons.OK, icone);
@@ -57,7 +57,7 @@ namespace BlocoNotas
             }
             else
             {
-                MessageBox.Show("Formato de hora inválido. Use HH:mm:ss.");
+                MessageBox.Show("Formato de data e hora inválido. Use dd/MM/yyyy HH:mm:ss.");
             }
         }
 

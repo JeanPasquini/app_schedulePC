@@ -51,7 +51,7 @@ namespace BlocoNotas
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.txtEditar);
             this.groupBox1.Controls.Add(this.btnExcluir);
             this.groupBox1.Controls.Add(this.dataGridView2);
@@ -161,7 +161,7 @@ namespace BlocoNotas
             this.txtAlarme.Location = new System.Drawing.Point(9, 354);
             this.txtAlarme.Name = "txtAlarme";
             this.txtAlarme.ReadOnly = true;
-            this.txtAlarme.Size = new System.Drawing.Size(100, 20);
+            this.txtAlarme.Size = new System.Drawing.Size(116, 20);
             this.txtAlarme.TabIndex = 10;
             // 
             // label4
@@ -201,6 +201,7 @@ namespace BlocoNotas
             // 
             // frmMain
             // 
+            this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(587, 418);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

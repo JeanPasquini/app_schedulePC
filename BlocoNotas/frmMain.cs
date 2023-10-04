@@ -12,17 +12,32 @@ using System.Windows.Forms;
 
 namespace BlocoNotas
 {
+
     public partial class frmMain : Form
     {
         public string alarm;
         public string gridTitulo;
         static AlarmManager globalAlarmManager = new AlarmManager();
+        private NotifyIcon notifyIcon;
 
         public frmMain()
         {
             InitializeComponent();
             dataGridView2.Columns[0].Width = 120;
             dataGridView2.Columns[1].Width = 74;
+            InitializeNotifyIcon();
+        }
+
+        private void InitializeNotifyIcon()
+        {
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            notifyIcon.Text = "Schedule";
+            notifyIcon.DoubleClick += new EventHandler(NotifyIcon_DoubleClick);
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.MenuItems.Add("Abrir", NotifyIcon_Open);
+            contextMenu.MenuItems.Add("Fechar", NotifyIcon_Close);
+            notifyIcon.ContextMenu = contextMenu;
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -44,7 +59,7 @@ namespace BlocoNotas
 
             foreach (FileInfo arquivo in arquivos)
             {
-                string formato = "HH:mm:ss";
+                string formato = "dd/MM/yyyy HH:mm:ss";
                 string nomeArquivoSemConfig = arquivo.Name.Replace("config", "");
 
                 if (DateTime.TryParseExact(getSpecificCodeString(arquivo.Name), formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime horaDaString))
@@ -258,6 +273,37 @@ namespace BlocoNotas
             else
             {
                 MessageBox.Show("Selecione um arquivo para editar");
+            }
+        }
+
+        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
+
+        private void NotifyIcon_Open(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
+
+        private void NotifyIcon_Close(object sender, EventArgs e)
+        {
+            // Implemente a lógica para fechar o programa quando o usuário clicar em "Fechar" no menu de contexto do ícone na bandeja do sistema.
+            Application.Exit();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+                notifyIcon.Visible = true;
             }
         }
     }

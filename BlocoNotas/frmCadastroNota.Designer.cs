@@ -61,9 +61,9 @@ namespace BlocoNotas
             // txtAlarme
             // 
             this.txtAlarme.Location = new System.Drawing.Point(22, 425);
-            this.txtAlarme.Mask = "00:00:00";
+            this.txtAlarme.Mask = "00/00/0000 90:00:00";
             this.txtAlarme.Name = "txtAlarme";
-            this.txtAlarme.Size = new System.Drawing.Size(55, 20);
+            this.txtAlarme.Size = new System.Drawing.Size(115, 20);
             this.txtAlarme.TabIndex = 11;
             this.txtAlarme.ValidatingType = typeof(System.DateTime);
             // 
@@ -133,6 +133,7 @@ namespace BlocoNotas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(506, 502);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmCadastroNota";
