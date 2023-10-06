@@ -23,8 +23,8 @@ namespace BlocoNotas
         public frmMain()
         {
             InitializeComponent();
-            dataGridView2.Columns[0].Width = 120;
-            dataGridView2.Columns[1].Width = 74;
+            dataGridView2.Columns[0].Width = 90;
+            dataGridView2.Columns[1].Width = 80;
             InitializeNotifyIcon();
         }
 
@@ -44,6 +44,7 @@ namespace BlocoNotas
         {
             atualizarGrid();
             atualizaAlarm();
+
         }
 
         public void atualizaAlarm()
@@ -86,8 +87,11 @@ namespace BlocoNotas
 
             foreach (FileInfo arquivo in arquivos)
             {
+                
+
                 string arquivoFormatado = System.IO.Path.GetFileNameWithoutExtension(arquivo.Name);
-                dataGridView2.Rows.Add(arquivoFormatado, arquivo.CreationTime);
+                string horaMinutosCriacao = arquivo.CreationTime.ToString("HH:mm:ss"); // Formato de hora e minutos
+                dataGridView2.Rows.Add(arquivoFormatado, arquivo.CreationTime, horaMinutosCriacao);
             }
 
             txtAlarme.Text = null;
@@ -304,6 +308,43 @@ namespace BlocoNotas
             {
                 this.Hide();
                 notifyIcon.Visible = true;
+            }
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewCell cell = dataGridView2.Rows[e.RowIndex].Cells[0];
+                if (cell.Value != null && cell.Value != DBNull.Value)
+                {
+                    gridTitulo = cell.Value.ToString();
+                    string nomeDoArquivo = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString() + ".txt";
+                    string nome = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    string nomeDoArquivoConfig = "config" + nomeDoArquivo;
+
+                    getSpecificCode(nomeDoArquivoConfig);
+
+                    txtTitulo.Text = nome;
+                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
+                    txtAlarme.Text = alarm;
+
+                    if (txtTitulo.Text != "" && txtConteudo.Text != "")
+                    {
+                        frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtAlarme.Text);
+                        frm.ShowDialog();
+                        atualizarGrid();
+                        atualizaAlarm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selecione um arquivo para editar");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um arquivo existente");
+                }
             }
         }
     }
