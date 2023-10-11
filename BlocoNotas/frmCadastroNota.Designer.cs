@@ -29,52 +29,37 @@ namespace BlocoNotas
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroNota));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtAlarme = new System.Windows.Forms.MaskedTextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTitulo = new System.Windows.Forms.TextBox();
             this.txtConteudo = new System.Windows.Forms.TextBox();
+            this.txtData = new System.Windows.Forms.MaskedTextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnCriarArquivotxt = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtTime = new System.Windows.Forms.MaskedTextBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtAlarme);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtTitulo);
             this.groupBox1.Controls.Add(this.txtConteudo);
             this.groupBox1.Location = new System.Drawing.Point(12, 73);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 418);
+            this.groupBox1.Size = new System.Drawing.Size(373, 380);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
-            // 
-            // txtAlarme
-            // 
-            this.txtAlarme.Location = new System.Drawing.Point(22, 386);
-            this.txtAlarme.Mask = "00/00/0000 90:00:00";
-            this.txtAlarme.Name = "txtAlarme";
-            this.txtAlarme.Size = new System.Drawing.Size(115, 20);
-            this.txtAlarme.TabIndex = 11;
-            this.txtAlarme.ValidatingType = typeof(System.DateTime);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 370);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Alarm";
             // 
             // label2
             // 
@@ -99,7 +84,8 @@ namespace BlocoNotas
             this.txtTitulo.Location = new System.Drawing.Point(22, 33);
             this.txtTitulo.Name = "txtTitulo";
             this.txtTitulo.Size = new System.Drawing.Size(332, 20);
-            this.txtTitulo.TabIndex = 8;
+            this.txtTitulo.TabIndex = 1;
+            this.txtTitulo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTitulo_KeyPress);
             // 
             // txtConteudo
             // 
@@ -107,24 +93,42 @@ namespace BlocoNotas
             this.txtConteudo.Multiline = true;
             this.txtConteudo.Name = "txtConteudo";
             this.txtConteudo.Size = new System.Drawing.Size(332, 290);
-            this.txtConteudo.TabIndex = 10;
+            this.txtConteudo.TabIndex = 2;
+            // 
+            // txtData
+            // 
+            this.txtData.Location = new System.Drawing.Point(22, 44);
+            this.txtData.Mask = "00/00/0000";
+            this.txtData.Name = "txtData";
+            this.txtData.Size = new System.Drawing.Size(65, 20);
+            this.txtData.TabIndex = 3;
+            this.txtData.ValidatingType = typeof(System.DateTime);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 28);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Data";
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(224, 497);
+            this.btnCancelar.Location = new System.Drawing.Point(243, 536);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(68, 36);
-            this.btnCancelar.TabIndex = 14;
+            this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnCriarArquivotxt
             // 
-            this.btnCriarArquivotxt.Location = new System.Drawing.Point(298, 497);
+            this.btnCriarArquivotxt.Location = new System.Drawing.Point(317, 536);
             this.btnCriarArquivotxt.Name = "btnCriarArquivotxt";
             this.btnCriarArquivotxt.Size = new System.Drawing.Size(68, 36);
-            this.btnCriarArquivotxt.TabIndex = 13;
+            this.btnCriarArquivotxt.TabIndex = 5;
             this.btnCriarArquivotxt.Text = "Salvar";
             this.btnCriarArquivotxt.UseVisualStyleBackColor = true;
             this.btnCriarArquivotxt.Click += new System.EventHandler(this.btnCriarArquivotxt_Click);
@@ -150,16 +154,49 @@ namespace BlocoNotas
             this.label4.TabIndex = 1;
             this.label4.Text = "Note";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.txtTime);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.txtData);
+            this.groupBox2.Location = new System.Drawing.Point(12, 459);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(373, 71);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Alarm";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(90, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Time";
+            // 
+            // txtTime
+            // 
+            this.txtTime.Location = new System.Drawing.Point(93, 44);
+            this.txtTime.Mask = "90:00:00";
+            this.txtTime.Name = "txtTime";
+            this.txtTime.Size = new System.Drawing.Size(52, 20);
+            this.txtTime.TabIndex = 4;
+            this.txtTime.ValidatingType = typeof(System.DateTime);
+            // 
             // frmCadastroNota
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(395, 545);
+            this.ClientSize = new System.Drawing.Size(395, 576);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCriarArquivotxt);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastroNota";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Note";
@@ -168,6 +205,8 @@ namespace BlocoNotas
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -175,7 +214,7 @@ namespace BlocoNotas
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.MaskedTextBox txtAlarme;
+        private System.Windows.Forms.MaskedTextBox txtData;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnCriarArquivotxt;
@@ -185,6 +224,9 @@ namespace BlocoNotas
         private System.Windows.Forms.TextBox txtConteudo;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.MaskedTextBox txtTime;
     }
 }
 

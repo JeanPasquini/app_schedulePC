@@ -16,6 +16,8 @@ namespace BlocoNotas
     public partial class frmMain : Form
     {
         public string alarm;
+        public string data;
+        public string hora;
         public string gridTitulo;
         static AlarmManager globalAlarmManager = new AlarmManager();
         private NotifyIcon notifyIcon;
@@ -82,28 +84,38 @@ namespace BlocoNotas
             string subpastaTxt = "txt";
             string caminhoDaSubpastaTxt = Path.Combine(diretorioDoApp, subpastaTxt);
 
+            string subpastaConfigs = "configs";
+            string caminhoDaSubpastaConfigs = Path.Combine(diretorioDoApp, subpastaConfigs);
+
+            
+
             DirectoryInfo dirInfo = new DirectoryInfo(caminhoDaSubpastaTxt);
             FileInfo[] arquivos = dirInfo.GetFiles("*.txt");
 
             foreach (FileInfo arquivo in arquivos)
             {
-                
+                getSpecificDates("config"+arquivo.Name);
 
                 string arquivoFormatado = System.IO.Path.GetFileNameWithoutExtension(arquivo.Name);
                 string horaMinutosCriacao = arquivo.CreationTime.ToString("HH:mm:ss"); // Formato de hora e minutos
-                dataGridView2.Rows.Add(arquivoFormatado, arquivo.CreationTime, horaMinutosCriacao);
+                dataGridView2.Rows.Add(arquivoFormatado, data, hora);
             }
 
-            txtAlarme.Text = null;
+            txtData.Text = null;
+            txtHora.Text = null;
             txtTitulo.Text = null;
             txtConteudo.Text = null;
         }
 
-        private string LerConteudoDoArquivo(string nomeDoArquivo)
+        private string LerConteudoDoArquivo(string nomeDoArquivo, bool txtConfig)
         {
-            if (File.Exists(caminhoArquivoTxt(nomeDoArquivo)))
+            if (File.Exists(caminhoArquivoTxt(nomeDoArquivo)) && txtConfig == false)
             {
                 return File.ReadAllText(caminhoArquivoTxt(nomeDoArquivo));
+            }
+            else if(File.Exists(caminhoArquivoConfig(nomeDoArquivo)) && txtConfig == true)
+            {
+                return File.ReadAllText(caminhoArquivoConfig(nomeDoArquivo));
             }
             else
             {
@@ -147,7 +159,7 @@ namespace BlocoNotas
 
         private void btnCriarArquivo_Click(object sender, EventArgs e)
         {
-            frmCadastroNota frm = new frmCadastroNota("", "", "");
+            frmCadastroNota frm = new frmCadastroNota("", "", "", "");
             frm.ShowDialog();
             atualizarGrid();
             atualizaAlarm();
@@ -253,10 +265,13 @@ namespace BlocoNotas
                     string nomeDoArquivoConfig = "config" + nomeDoArquivo;
 
                     getSpecificCode(nomeDoArquivoConfig);
+                    getSpecificDates(nomeDoArquivoConfig);
+
 
                     txtTitulo.Text = nome;
-                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
-                    txtAlarme.Text = alarm;
+                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo, false);
+                    txtData.Text = data;
+                    txtHora.Text = hora;
                 }
                 else
                 {
@@ -269,7 +284,7 @@ namespace BlocoNotas
         {
             if (txtTitulo.Text != "" && txtConteudo.Text != "")
             {
-                frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtAlarme.Text);
+                frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtData.Text, txtHora.Text);
                 frm.ShowDialog();
                 atualizarGrid();
                 atualizaAlarm();
@@ -326,12 +341,11 @@ namespace BlocoNotas
                     getSpecificCode(nomeDoArquivoConfig);
 
                     txtTitulo.Text = nome;
-                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo);
-                    txtAlarme.Text = alarm;
+                    txtConteudo.Text = LerConteudoDoArquivo(nomeDoArquivo, false);
 
                     if (txtTitulo.Text != "" && txtConteudo.Text != "")
                     {
-                        frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtAlarme.Text);
+                        frmCadastroNota frm = new frmCadastroNota(txtTitulo.Text, txtConteudo.Text, txtData.Text, txtHora.Text);
                         frm.ShowDialog();
                         atualizarGrid();
                         atualizaAlarm();
@@ -345,6 +359,29 @@ namespace BlocoNotas
                 {
                     MessageBox.Show("Selecione um arquivo existente");
                 }
+            }
+        }
+
+        private void getSpecificDates(string configFileName)
+        {
+            // Suponha que 'alarm' é uma variável que armazena o valor completo da data e hora
+            string alarm = LerConteudoDoArquivo(configFileName, true);
+
+            alarm = alarm.Replace("alarme", "").Trim(); // Remove a palavra e remove espaços extras
+
+            // Se a data e hora estão juntas, encontre o espaço em branco que separa a data da hora
+            int spaceIndex = alarm.IndexOf(' ');
+
+            if (spaceIndex >= 0)
+            {
+                // Agora, você pode separar a data e a hora usando a posição do espaço
+                string data = alarm.Substring(0, spaceIndex); // Pega a parte da data
+                string hora = alarm.Substring(spaceIndex + 1); // Pega a parte da hora
+
+                // Agora você pode definir 'data' e 'hora' nas áreas apropriadas da sua interface do usuário
+                // Exemplo:
+                this.data = data;
+                this.hora = hora;
             }
         }
     }
