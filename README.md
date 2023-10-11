@@ -1,4 +1,4 @@
-![Nome do ícone](https://cdn.icon-icons.com/icons2/4039/PNG/512/ballpoint_pen_stationery_notes_paper_sticky_note_icon_256745.png)
+<img src="https://cdn.icon-icons.com/icons2/4039/PNG/512/ballpoint_pen_stationery_notes_paper_sticky_note_icon_256745.png" width="100">
 
 # app_schedulePC
  
